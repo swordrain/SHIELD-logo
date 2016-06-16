@@ -1,0 +1,135 @@
+<style>
+body{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: gray;
+}
+</style>
+<canvas id="canvas" width=512 height=512>
+
+</canvas>
+
+<script>
+	var context = document.getElementById("canvas").getContext("2d");
+	function drawOuterCircle(){
+		context.beginPath();
+		context.lineWidth = 10;
+		context.strokeStyle = "black";
+		context.fillStyle="white";
+		context.arc(256, 256, 246, 0, Math.PI * 2);
+		context.stroke();
+		context.fill();
+	}
+	function drawInnerCircle(){
+		context.beginPath();
+		//context.lineWidth = 10;
+		//context.strokeStyle = "black";
+		context.fillStyle="black";
+		context.arc(256, 256, 218, 0, Math.PI * 2);
+		//context.stroke();
+		context.fill();
+	}
+
+	function drawWings(){
+		context.beginPath();
+		context.moveTo(256, 337);
+		context.lineTo(435, 137);
+		context.lineTo(440, 145);
+		context.lineTo(402, 195);
+		context.lineTo(471, 254);
+		context.lineTo(472, 261);
+		context.lineTo(399, 199);
+		context.lineTo(364, 242);
+		context.lineTo(455, 337);
+		context.lineTo(453, 344);
+		context.lineTo(360, 248);
+		context.lineTo(328, 289);
+		context.lineTo(417, 400);
+		context.lineTo(387, 427);
+		context.lineTo(301, 304);
+		context.lineTo(256, 352);
+		context.lineTo(215, 304);
+		context.lineTo(134, 432);
+		context.lineTo(103, 406);
+		context.lineTo(190, 290);
+		context.lineTo(155, 249);
+		context.lineTo(63, 350);
+		context.lineTo(60, 343);
+
+		context.lineTo(150, 243);
+		context.lineTo(114, 201);
+		context.lineTo(41, 265);
+
+		context.lineTo(42, 258);
+		context.lineTo(110, 197);
+		context.lineTo(70, 147);
+
+		context.lineTo(75, 140);
+
+		context.fillStyle = "white";
+		context.closePath();  
+		context.fill(); 
+	}
+
+	function drawHeader(){
+		context.beginPath();
+		context.arc(256, 256,  215, -9* Math.PI/12, -3 * Math.PI/12);
+		context.lineTo(306, 170);
+		context.lineTo(280, 120);
+		context.lineTo(280, 120);
+		context.lineTo(286, 112);
+		context.lineTo(306, 107);
+		context.lineTo(307, 105);
+		context.lineTo(296, 95);
+		context.lineTo(252, 92);
+		context.lineTo(244, 95);
+		context.lineTo(238, 102);
+		context.lineTo(205, 170);
+		context.closePath();  
+		context.fill(); 
+	}
+
+	function drawCircularText(string, startAngle, endAngle, circle, inverse) {
+		//reference - http://corehtml5canvas.com/code-live/ch03/example-3.9/example.html
+	   var radius = circle.radius,
+	       angleDecrement = (startAngle - endAngle)/(string.length-1),
+	       angle = parseFloat(startAngle),
+	       index = 0,
+	       character;
+
+	   context.save();
+	   context.fillStyle = "black";
+	   context.font = 22 + 'px Arial'; 
+
+	   while (index < string.length) {
+	      character = string.charAt(index);
+
+	      context.save();
+	      context.beginPath();
+
+	      context.translate(
+	         circle.x + Math.cos(angle) * radius,
+	         circle.y - Math.sin(angle) * radius); //不考虑字符宽度，仅仅均分
+
+	      context.rotate(Math.PI/2 - angle - (inverse?Math.PI: 0));
+	      
+	      context.fillText(character, 0, 0);
+	      //context.strokeText(character, 0, 0);
+
+	      angle -= angleDecrement;
+	      index++;
+
+	      context.restore();
+	   }
+	   context.restore();
+	}
+
+	drawOuterCircle();
+	drawInnerCircle();
+	drawWings();
+	drawHeader();
+	drawCircularText("STRAEGIC HOMELAND INTERVENTION ENFORCEMENT", 7*Math.PI / 6, -1*Math.PI/6 , {radius: 225, x: 256, y: 256});
+	drawCircularText("LOGISTICS DIVISION", 31*Math.PI / 24, 41*Math.PI/24 , {radius: 240, x: 256, y: 256}, true);
+
+</script>
